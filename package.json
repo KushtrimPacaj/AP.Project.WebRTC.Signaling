@@ -1,0 +1,15 @@
+{
+  "name": "webrtcsignaling",
+  "version": "1.0.0",
+  "description": "Web RTC signaling for audio and video calls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kujtim Hyseni",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
