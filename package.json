@@ -2,7 +2,7 @@
   "name": "webrtcsignaling",
   "version": "1.0.0",
   "description": "Web RTC signaling for audio and video calls",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
