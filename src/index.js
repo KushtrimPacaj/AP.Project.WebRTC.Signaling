@@ -2,7 +2,7 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
-var onlineUsers = [];
+var onlineUsers = {};
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
@@ -19,7 +19,8 @@ io.on('connection', function (socket) {
   // To keep track of online users
   socket.on('userPresence', function (data) {
     onlineUsers[socket.id] = {
-      username: data.username
+      userame: data.username,
+      userId: socket.id
     };
     socket.broadcast.emit('onlineUsers', onlineUsers);
   });

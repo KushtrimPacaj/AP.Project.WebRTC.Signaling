@@ -1,29 +1,107 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/src/WebRTC/peerConnection.js"></script>
-    <script src="/src/WebRTC/client.js"></script>
-<script>
-  // var socket = io();
-  // socket.emit('message', {toUsername:"kujtim", data:"Ishalla po bon"});
-</script>
-  </body>
+
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font: 13px Helvetica, Arial;
+    }
+
+    form {
+      background: #000;
+      padding: 3px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    form input {
+      border: 0;
+      padding: 10px;
+      width: 90%;
+      margin-right: .5%;
+    }
+
+    form button {
+      width: 9%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 10px;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages li {
+      padding: 5px 10px;
+    }
+
+    #messages li:nth-child(odd) {
+      background: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+  <form action="">
+    <input id="m" autocomplete="off" /><button>Send</button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // var socket = io();
+
+    var socket = io();
+
+    socket.on('connect', function () {
+      // To subscribe the socket to a given channel
+      socket.emit('join', {
+        username: "user"
+      });
+    });
+
+    // For sending message
+    socket.send = function (message) {
+      socket.emit('message', {
+        fromUsername: peer.fromUsername,
+        toUsername: peer.toUsername,
+        data: message
+      });
+    };
+
+    socket.on('disconnect', function () {
+      // To intimate other clients about disconnection from server
+      socket.emit('disconnect', {
+        username: "user"
+      });
+    });
+
+    // To keep track of online users
+    socket.on('onlineUsers', function (onlineUsers) {
+      console.log("Online user " + onlineUsers);
+
+    });
+
+    // To listen for other clients' disconnection from server
+    socket.on('disconnected', function (username) {
+    });
+
+    // To intimate other clients about online presence
+    socket.emit('userPresence', {
+      username: "user"
+    });
+
+  </script>
+</body>
+
 </html>
