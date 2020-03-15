@@ -99,6 +99,15 @@ io.on('connection', function (socket) {
         }
     });
 
+
+    socket.on("sendFabricPath", function (data) {
+        const targetSocketId = findSocketId(data.targetUserId);
+        if (targetSocketId != null) {
+            console.log("ON.sendFabricPath, sending event onReceivedFabricPath to id " + data.targetUserId + " with data: '" + JSON.stringify(data) + "'");
+            io.to(targetSocketId).emit('onReceivedFabricPath', data);
+        }
+    });
+
     socket.on('disconnect', function (data) {
         console.log("User disconnected: " + socket.client.id)
         let disconnectedClient = null;
