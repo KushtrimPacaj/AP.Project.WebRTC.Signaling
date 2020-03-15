@@ -126,14 +126,6 @@ function findSocketId(userId) {
     return null;
 }
 
-function deleteBySocketId(socketId) {
-    for (let i = 0; i < clients.length; i++) {
-        if (clients[i].socketId === socketId) {
-            clients.splice(i, 1);
-        }
-    }
-}
-
 function getClientIndex(socketId) {
     for (let i = 0; i < clients.length; i++) {
         if (clients[i].socketId === socketId) {
